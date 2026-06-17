@@ -4,9 +4,9 @@
 
 *ForeWarn-BI-Agent, in production, ~12 MCP tools, three LLM providers, schema and reporting contracts the agent conforms to.*
 
-*All code lives in [`fw_bi_agent_open_code/`](fw_bi_agent_open_code/). The section openers and highlighted lines carry the system-level argument. New to the jargon? There's a [plain-English glossary](GLOSSARY.md).*
+*All code lives in [`fw_bi_agent_open_code/`](https://github.com/yeshwanth806/ForeWarn-BI-Agent/tree/main/fw_bi_agent_open_code). The section openers and highlighted lines carry the system-level argument. New to the jargon? There's a [plain-English glossary](https://github.com/yeshwanth806/ForeWarn-BI-Agent/blob/main/GLOSSARY.md).*
 
-![Architecture overview — a single probabilistic LLM bounded by deterministic control layers: a regex Router, fault-isolated MCP subprocesses, structural Validators, a context/governance wrapper, and Postgres telemetry.](images/image1.png)
+![Architecture overview — a single probabilistic LLM bounded by deterministic control layers: a regex Router, fault-isolated MCP subprocesses, structural Validators, a context/governance wrapper, and Postgres telemetry.](https://raw.githubusercontent.com/yeshwanth806/ForeWarn-BI-Agent/main/images/image1.png)
 
 ---
 
@@ -18,7 +18,7 @@ The fix was not a better prompt. The fix was taking those fields out of the mode
 
 > **The agent isn't reliable because the model is reliable. It's reliable because it sits behind a system that already was.**
 
-![Results card — four before/after metrics from the production integration, each tagged to the section that explains it.](images/image4.png)
+![Results card — four before/after metrics from the production integration, each tagged to the section that explains it.](https://raw.githubusercontent.com/yeshwanth806/ForeWarn-BI-Agent/main/images/image4.png)
 
 *Operational numbers are SQL queries over our production telemetry; correctness rates were evaluated against versioned golden sets. How we measure: §5.*
 
@@ -61,7 +61,7 @@ for table in root.find_all(exp.Table):   # only real table references surface
     check_against_schema(table.name)
 ```
 
-→ Full AST-based validator: [`fw_bi_agent_open_code/guardrails/sql_validator.py`](fw_bi_agent_open_code/guardrails/sql_validator.py)
+→ Full AST-based validator: [`fw_bi_agent_open_code/guardrails/sql_validator.py`](https://github.com/yeshwanth806/ForeWarn-BI-Agent/blob/main/fw_bi_agent_open_code/guardrails/sql_validator.py)
 
 The headline: **structural validation, not surface filtering, is the table-stakes safety boundary for SQL-generating LLMs** — and it is only tractable to write because ForeWarn's schema and access layers already define the structure to validate against.
 
@@ -107,7 +107,7 @@ The Router reads session state, not just the message. A cached preview or an upl
 
 *Honest note: we planned a tiny-LLM disambiguation fallback for ambiguous messages and deliberately didn't ship it — unioning all tool groups is always safe, and it skips an LLM call on every ambiguous turn.*
 
-![Tool-routing flow — a regex intent router narrows ~12 tools to the matched groups before the LLM sees them; the old "bind all 12 tools" path is deprecated.](images/image2.png)
+![Tool-routing flow — a regex intent router narrows ~12 tools to the matched groups before the LLM sees them; the old "bind all 12 tools" path is deprecated.](https://raw.githubusercontent.com/yeshwanth806/ForeWarn-BI-Agent/main/images/image2.png)
 
 > **Disambiguate with cheap deterministic code before you ask the LLM.**
 
@@ -139,9 +139,9 @@ After each stage, a deterministic validator runs. Pass → continue. Fail → re
 
 The alias contract is the kind of thing the validators check: each chart type requires SQL to project aliases matching `dim{n}_name` or `metric{n}` — one regex, checked deterministically, with the chart type's mandatory subset verified against the platform's chart registry.
 
-![Three-stage pipeline — Intent, Classify, Rewrite, each gated by a deterministic validator; pass continues, one retry is allowed, and a second failure falls back to deterministic rules that still produce a valid (degraded) config.](images/image3.png)
+![Three-stage pipeline — Intent, Classify, Rewrite, each gated by a deterministic validator; pass continues, one retry is allowed, and a second failure falls back to deterministic rules that still produce a valid (degraded) config.](https://raw.githubusercontent.com/yeshwanth806/ForeWarn-BI-Agent/main/images/image3.png)
 
-→ Full validator and stage-orchestration: [`fw_bi_agent_open_code/guardrails/pipeline_stages.py`](fw_bi_agent_open_code/guardrails/pipeline_stages.py)
+→ Full validator and stage-orchestration: [`fw_bi_agent_open_code/guardrails/pipeline_stages.py`](https://github.com/yeshwanth806/ForeWarn-BI-Agent/blob/main/fw_bi_agent_open_code/guardrails/pipeline_stages.py)
 
 When a single prompt is too big to validate, split it. Smaller contracts are easier to test and easier to fall back from. Retry loops on the same prompt rarely converge. A deterministic degraded-but-valid output beats another spin of the wheel.
 
@@ -194,7 +194,7 @@ if not chain:                      # everything cooling — override
     chain = [m for m in chain if m]
 ```
 
-→ Full `pick_model_chain`, cooldown bookkeeping, and stickiness helpers: [`fw_bi_agent_open_code/reliability/fallback_chain.py`](fw_bi_agent_open_code/reliability/fallback_chain.py)
+→ Full `pick_model_chain`, cooldown bookkeeping, and stickiness helpers: [`fw_bi_agent_open_code/reliability/fallback_chain.py`](https://github.com/yeshwanth806/ForeWarn-BI-Agent/blob/main/fw_bi_agent_open_code/reliability/fallback_chain.py)
 
 Push fallback down once and reliability becomes a property of every code path that calls an LLM — not a property of the ones you remembered to add it to.
 
@@ -210,7 +210,7 @@ Push fallback down once and reliability becomes a property of every code path th
 >
 > It is also how we measure. The operational numbers in this post — latency, tokens, error rates — are SQL queries over this telemetry. The correctness numbers — like §1's SQL-incompatibility rate — were evaluated against versioned golden sets: curated inputs and expected outcomes for every tool, exact values where a tool is deterministic, structural assertions plus a scoring rubric where it isn't.
 
-→ Full schema (sessions / turns / tool_calls) and the guardrail / feedback columns that earn the most queries: [`fw_bi_agent_open_code/telemetry/postgres_schema.sql`](fw_bi_agent_open_code/telemetry/postgres_schema.sql)
+→ Full schema (sessions / turns / tool_calls) and the guardrail / feedback columns that earn the most queries: [`fw_bi_agent_open_code/telemetry/postgres_schema.sql`](https://github.com/yeshwanth806/ForeWarn-BI-Agent/blob/main/fw_bi_agent_open_code/telemetry/postgres_schema.sql)
 
 Subprocesses keep failures from spreading; structured Postgres logs let us see them. Either one alone is a half-system.
 
@@ -257,7 +257,7 @@ if not using_user_key:
     _agent_cache[cache_key] = agent
 ```
 
-→ Full per-request agent cache with the `using_user_key` cache-key discipline: [`fw_bi_agent_open_code/governance/agent_cache.py`](fw_bi_agent_open_code/governance/agent_cache.py)
+→ Full per-request agent cache with the `using_user_key` cache-key discipline: [`fw_bi_agent_open_code/governance/agent_cache.py`](https://github.com/yeshwanth806/ForeWarn-BI-Agent/blob/main/fw_bi_agent_open_code/governance/agent_cache.py)
 
 BYOK error handling falls out of the same architectural choice. When a user's key is bad, the very first call fails loudly: the Orchestrator classifies the auth failure, tells the user immediately, and stops the turn — before fallback logic can mask it as a silent provider switch. That explicit, early error is only possible because the Orchestrator owns the key, not the LLM.
 
@@ -308,7 +308,7 @@ One scope note: this boundary is right for regulated, audited enterprise data, w
 
 ---
 
-*All code, the [glossary](GLOSSARY.md), and the long snippets lifted out of this article are in [`fw_bi_agent_open_code/`](fw_bi_agent_open_code/).*
+*All code, the [glossary](https://github.com/yeshwanth806/ForeWarn-BI-Agent/blob/main/GLOSSARY.md), and the long snippets lifted out of this article are in [`fw_bi_agent_open_code/`](https://github.com/yeshwanth806/ForeWarn-BI-Agent/tree/main/fw_bi_agent_open_code).*
 
 ---
 
