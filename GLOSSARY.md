@@ -1,6 +1,6 @@
 # Glossary — Terms used in the architecture blog
 
-A plain-English companion to **["Integrating AI into a Live BI Platform — The Patterns That Actually Held Up"](forewarn_genai_integration.md)**. If you bumped into a term in the post and weren't sure what it meant, look it up here. Definitions are intentionally short and informal — not textbook-precise.
+A plain-English companion to **[Integrating AI into a Live BI Platform — The Patterns That Actually Held Up](https://medium.com/@yeshwanthd806/integrating-ai-into-a-live-bi-platform-the-patterns-that-actually-held-up-71e348461642)**. If you bumped into a term in the post and weren't sure what it meant, look it up here. Definitions are intentionally short and informal — not textbook-precise.
 
 ---
 
