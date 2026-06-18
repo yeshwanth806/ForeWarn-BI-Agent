@@ -1,10 +1,8 @@
 # Determinism Patterns for GenAI in Enterprise Analytics
 
-Companion code for the article **["Integrating AI into a Live BI Platform — The Patterns That Actually Held Up"][article]**.
+Companion code for the article **[Integrating AI into a Live BI Platform — The Patterns That Actually Held Up](https://medium.com/@yeshwanthd806/integrating-ai-into-a-live-bi-platform-the-patterns-that-actually-held-up-71e348461642)**.
 
 The article describes six production patterns we used to embed a conversational AI layer (ForeWarn-BI-Agent) on top of a governed enterprise analytics platform without giving up on safety, reliability, or auditability. This repo contains the code referenced in the article — the long snippets that were lifted out to keep the narrative readable. (The plain-English glossary lives next to the article, one level up.)
-
-[article]: ../forewarn_genai_integration.md
 
 ---
 
