@@ -13,7 +13,7 @@ forewarn_genai_blog/
 └── fw_bi_agent_open_code/         # Runnable companion code (snippets lifted out of the article, plus demos)
 ```
 
-- **[forewarn_genai_integration.md](forewarn_genai_integration.md)** — the article itself.
+- **[Integrating AI into a Live BI Platform — The Patterns That Actually Held Up](https://medium.com/@yeshwanthd806/integrating-ai-into-a-live-bi-platform-the-patterns-that-actually-held-up-71e348461642)** — the article itself.
 - **[GLOSSARY.md](GLOSSARY.md)** — short, informal definitions for any term in the post.
 - **[fw_bi_agent_open_code/](fw_bi_agent_open_code/)** — the companion code. It runs with no API keys, database, or network; see its [README](fw_bi_agent_open_code/README.md) for how to run the two demos.
 - **images/** — the architecture overview, results card, tool-routing flow, and three-stage pipeline figures.
